@@ -32,6 +32,26 @@
         UNIQUE (name, age, gender)
       );
     `);
+    document.getElementById("register").addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
+    const age = Number(document.getElementById("age").value);
+    const gender = document.getElementById("gender").value;
+
+    if (!name || !gender || isNaN(age) || age < 0 || /\d/.test(name)) {
+        alert("Please enter valid name, age (non-negative), and gender.");
+        return;
+    }
+
+    try {
+        await db.query(
+        "INSERT INTO patients (name, age, gender) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
+        [name, age, gender]
+        );
+        alert(`Patient "${name}" registered!`);
+    } catch (err) {
+        alert("Insert error: " + err.message);
+    }
+    });
     </script>
 </body>
 </html>
