@@ -36,7 +36,7 @@ On the same directory open terminal and write below command to start local serve
 
 
 # Usage
-    1. Enter patient details (Name, Age, Gender).
+    1. Enter patient details (Name, Age, Gender,MobileNo , Address).
     2. Click Register to insert into the local browser-based database.
     3. Use the query box to run custom SQL queries (e.g., SELECT * FROM patients;).
     4. Data persists in the browser (IndexedDB) and syncs across tabs.
