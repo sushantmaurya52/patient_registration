@@ -81,6 +81,21 @@
         alert("Query error: " + err.message);
     }
     });
+    async function reloadPatientList(forceReload = false) {
+      if (forceReload) {
+        db = new PGlite("idb://patients-db");
+      }
+
+      try {
+        const result = await db.query("SELECT * FROM patients");
+        document.getElementById("output").textContent = JSON.stringify(result.rows, null, 2);
+        document.getElementById("customQuery").value = "SELECT * FROM patients;";
+      } catch (err) {
+        console.error("Query error:", err);
+      }
+    }
+
+    await reloadPatientList();
 
     </script>
 </body>
