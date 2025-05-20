@@ -4,156 +4,153 @@
   <meta charset="UTF-8" />
   <title>Patient Registration</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #2c3e50;
-    }
-    select {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 150px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px 30px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #2c3e50;
+  }
+  select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+  }
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
 
-    .title {
-      font-size: 28px;
-      text-align: center;
-      font-weight: 600;
-      margin-bottom: 30px;
-      position: relative;
-    }
+  .title {
+    font-size: 28px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 30px;
+    position: relative;
+  }
 
-    .title::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 3px;
-      background: #3498db;
-      margin: 10px auto 0;
-      border-radius: 2px;
-    }
+  .title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #3498db;
+    margin: 10px auto 0;
+    border-radius: 2px;
+  }
 
-    
-    .form-group {
-      display: flex;
+  .form-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+    box-sizing: border-box;
+  }
+
+  button {
+    padding: 10px 18px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 90px;
+    height: 42px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  .query-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  /* Updated widths here */
+  #customQuery {
+    width: 820px; /* 5 inputs x 150px each */
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    box-sizing: border-box;
+    min-height: 100px;
+    font-family: monospace;
+    display: block;
+  }
+
+  button#query {
+    width: 90px;
+    padding: 10px 0;
+  }
+
+  pre#output {
+    margin: 0 auto 40px auto;
+    width: 855px; /* textarea + gap + button */
+    max-height: 300px;
+    overflow: auto;
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    user-select: none;
+  }
+
+  .footer strong {
+    color: #2c3e50;
+  }
+
+  @media (max-width: 600px) {
+    .form-group, .query-row {
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      margin-bottom: 30px;
-      flex-wrap: nowrap;
-      align-items: center;
-    }
-
-    input {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 150px;
-      box-sizing: border-box;
-    }
-
-    button {
-      padding: 10px 18px;
-      background-color: #3498db;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 500;
-      width: 90px;
-      height: 42px; 
-      box-sizing: border-box;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #2980b9;
-    }
-
-    
-    .query-row {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 30px;
-      flex-wrap: nowrap;
-      align-items: center;
     }
 
     #customQuery {
-      width: 480px; 
-      font-size: 16px;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      resize: vertical;
-      box-sizing: border-box;
-      min-height: 100px;
-      font-family: monospace;
-      display: block;
-    }
-
-    button#query {
-      width: 90px; 
-      padding: 10px 0; 
+      width: 100%;
     }
 
     pre#output {
-      margin: 0 auto 40px auto;
-      width: calc(480px + 15px + 100px); 
-      max-height: 300px;
-      overflow: auto;
-      padding: 15px;
-      background: #f0f0f0;
-      border-radius: 6px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      box-sizing: border-box;
-      font-family: monospace;
-      font-size: 14px;
-      color: #333;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: 90%;
     }
-
-    
-    .footer {
-      text-align: center;
-      font-size: 14px;
-      color: #888;
-      user-select: none;
-    }
-
-    .footer strong {
-      color: #2c3e50;
-    }
-
-    
-    @media (max-width: 600px) {
-      .form-group, .query-row {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      #customQuery {
-        width: 100%;
-      }
-
-      pre#output {
-        width: 90%;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <div class="container">
@@ -206,6 +203,7 @@
         ALTER TABLE patients ADD COLUMN IF NOT EXISTS address TEXT;
         ALTER TABLE patients ADD COLUMN IF NOT EXISTS date DATE DEFAULT CURRENT_DATE;
         ALTER TABLE patients ADD COLUMN IF NOT EXISTS time TIME DEFAULT CURRENT_TIME;
+        
     `);
 
     
@@ -234,12 +232,16 @@
     alert("Please enter all fields correctly.");
     return;
     }
-
-      try {
+    const now = new Date();
+    const date = now.toLocaleDateString('en-CA');     
+    const time = now.toLocaleTimeString('en-GB'); 
+    try {
         await db.query(
-        "INSERT INTO patients (name, age, gender, mobileno, address) VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING",
-        [name, age, gender, mobileno, address]
+        `INSERT INTO patients (name, age, gender, mobileno, address, date, time) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT DO NOTHING`,
+        [name, age, gender, mobileno, address, date, time]
         );
+
         alert(`Patient "${name}" registered!`);
         notifyDbChange();
         await reloadPatientList();
@@ -278,6 +280,10 @@
 
       try {
         const result = await db.query("SELECT * FROM patients");
+        result.rows.forEach(row => {
+            if (row.date) row.date = new Date(row.date).toISOString().split("T")[0]; // "YYYY-MM-DD"
+            if (row.time && typeof row.time === "string") row.time = row.time.split(".")[0]; // removes milliseconds
+        });
         document.getElementById("output").textContent = JSON.stringify(result.rows, null, 2);
         document.getElementById("customQuery").value = "SELECT * FROM patients;";
       } catch (err) {
