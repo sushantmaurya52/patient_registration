@@ -17,6 +17,12 @@
       </select>
       <button id="register">Register</button>
     </div>
+    <div class="query-row">
+    <textarea id="customQuery">SELECT * FROM patients;</textarea>
+    <button id="query">Run Query</button>
+    </div>
+    <pre id="output">Loading...</pre>
+
 
     <script type="module">
     import { PGlite } from "https://cdn.jsdelivr.net/npm/@electric-sql/pglite@0.3.0/dist/index.min.js";
@@ -52,6 +58,16 @@
         alert("Insert error: " + err.message);
     }
     });
+    document.getElementById("query").addEventListener("click", async () => {
+    const customSQL = document.getElementById("customQuery").value.trim();
+    try {
+        const result = await db.query(customSQL);
+        document.getElementById("output").textContent = JSON.stringify(result.rows ?? result, null, 2);
+    } catch (err) {
+        alert("Query error: " + err.message);
+    }
+    });
+
     </script>
 </body>
 </html>
