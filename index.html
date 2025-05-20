@@ -160,16 +160,19 @@
     <div class="title">🩺 Patient Registration</div>
 
     <div class="form-group">
-      <input id="name" placeholder="Name" />
-      <input id="age" type="number" placeholder="Age" />
-      <select id="gender">
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-      </select>
-      <button id="register">Register</button>
+    <input id="name" placeholder="Name" />
+    <input id="age" type="number" placeholder="Age" />
+    <select id="gender">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+    <input id="mobileno" type="text" placeholder="Mobile No." />
+    <input id="address" type="text" placeholder="Address" />
+    <button id="register">Register</button>
     </div>
+
 
     <div class="query-row">
       <textarea id="customQuery" rows="2">SELECT * FROM patients;</textarea>
@@ -195,8 +198,12 @@
         name TEXT,
         age INTEGER CHECK (age >= 0),
         gender TEXT,
-        UNIQUE (name, age, gender)
-      );
+        mobileno TEXT,
+        address TEXT,
+        UNIQUE (name, age, gender, mobileno,address)
+        );
+        ALTER TABLE patients ADD COLUMN IF NOT EXISTS mobileno TEXT;
+        ALTER TABLE patients ADD COLUMN IF NOT EXISTS address TEXT;
     `);
 
     
@@ -215,27 +222,31 @@
     }
 
     document.getElementById("register").addEventListener("click", async () => {
-      const name = document.getElementById("name").value.trim();
-      const age = Number(document.getElementById("age").value);
-      const gender = document.getElementById("gender").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const age = Number(document.getElementById("age").value);
+    const gender = document.getElementById("gender").value.trim();
+    const mobileno = document.getElementById("mobileno").value.trim();
+    const address = document.getElementById("address").value.trim();
 
-      if (!name || !gender || gender === "" ||  isNaN(age) ||  age < 0 || /\d/.test(name))  {
-        alert("Please enter valid name, age (non-negative), and gender.");
-        return;
-      }
+    if (!name || !gender || gender === "" || isNaN(age) || age < 0 || /\d/.test(name) || !mobileno || !address || !/^\d{10}$/.test(mobileno)) {
+    alert("Please enter all fields correctly.");
+    return;
+    }
 
       try {
         await db.query(
-          "INSERT INTO patients (name, age, gender) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
-          [name, age, gender]
+            `INSERT INTO patients (name, age, gender, mobileno, address)
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT DO NOTHING`,
+            [name, age, gender, mobileno, address]
         );
         alert(`Patient "${name}" registered!`);
         notifyDbChange();
         await reloadPatientList();
-      } catch (err) {
+        } catch (err) {
         alert("Insert error: " + err.message);
         console.error(err);
-      }
+        }
     });
 
     document.getElementById("query").addEventListener("click", async () => {
