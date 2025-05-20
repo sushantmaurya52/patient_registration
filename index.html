@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Registration</title>
-    <style>
+  <meta charset="UTF-8" />
+  <title>Patient Registration</title>
+  <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -34,6 +33,18 @@
       margin-bottom: 30px;
       position: relative;
     }
+
+    .title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #3498db;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    
     .form-group {
       display: flex;
       justify-content: center;
@@ -65,6 +76,12 @@
       box-sizing: border-box;
       transition: background-color 0.3s ease;
     }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    
     .query-row {
       display: flex;
       justify-content: center;
@@ -108,10 +125,38 @@
       color: #333;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
-    </style>
+
+    
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      user-select: none;
+    }
+
+    .footer strong {
+      color: #2c3e50;
+    }
+
+    
+    @media (max-width: 600px) {
+      .form-group, .query-row {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      #customQuery {
+        width: 100%;
+      }
+
+      pre#output {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
+  <div class="container">
     <div class="title">Patient Registration</div>
 
     <div class="form-group">
@@ -134,7 +179,10 @@
     
     <pre id="output">Loading...</pre>
 
-    
+    <div class="footer">
+      Developed by <strong>Sushant Maurya</strong><br />
+      8446658766 | sushantmaurya52@gmail.com
+    </div>
   </div>
     <script type="module">
     import { PGlite } from "https://cdn.jsdelivr.net/npm/@electric-sql/pglite@0.3.0/dist/index.min.js";
