@@ -38,6 +38,20 @@
         UNIQUE (name, age, gender)
       );
     `);
+    let notifyDbChange;
+    if ("BroadcastChannel" in window) {
+      const channel = new BroadcastChannel('pglite_sync_channel');
+      notifyDbChange = () => channel.postMessage('db-updated');
+      channel.addEventListener('message', async (event) => {
+        if (event.data === 'db-updated') await reloadPatientList(true);
+      });
+    } else {
+      window.addEventListener('storage', (event) => {
+        if (event.key === 'pglite_db_update') reloadPatientList(true);
+      });
+      notifyDbChange = () => localStorage.setItem('pglite_db_update', Date.now());
+    }
+
     document.getElementById("register").addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
     const age = Number(document.getElementById("age").value);
