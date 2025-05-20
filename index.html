@@ -204,6 +204,8 @@
         );
         ALTER TABLE patients ADD COLUMN IF NOT EXISTS mobileno TEXT;
         ALTER TABLE patients ADD COLUMN IF NOT EXISTS address TEXT;
+        ALTER TABLE patients ADD COLUMN IF NOT EXISTS date DATE DEFAULT CURRENT_DATE;
+        ALTER TABLE patients ADD COLUMN IF NOT EXISTS time TIME DEFAULT CURRENT_TIME;
     `);
 
     
@@ -235,10 +237,8 @@
 
       try {
         await db.query(
-            `INSERT INTO patients (name, age, gender, mobileno, address)
-            VALUES ($1, $2, $3, $4, $5)
-            ON CONFLICT DO NOTHING`,
-            [name, age, gender, mobileno, address]
+        "INSERT INTO patients (name, age, gender, mobileno, address) VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING",
+        [name, age, gender, mobileno, address]
         );
         alert(`Patient "${name}" registered!`);
         notifyDbChange();
