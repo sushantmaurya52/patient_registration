@@ -17,5 +17,21 @@
       </select>
       <button id="register">Register</button>
     </div>
+
+    <script type="module">
+    import { PGlite } from "https://cdn.jsdelivr.net/npm/@electric-sql/pglite@0.3.0/dist/index.min.js";
+
+    let db = new PGlite("idb://patients-db");
+
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS patients (
+        id SERIAL PRIMARY KEY,
+        name TEXT,
+        age INTEGER CHECK (age >= 0),
+        gender TEXT,
+        UNIQUE (name, age, gender)
+      );
+    `);
+    </script>
 </body>
 </html>
